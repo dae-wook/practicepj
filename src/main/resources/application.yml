@@ -1,0 +1,28 @@
+server:
+  port: 8000
+
+spring:
+  thymeleaf:
+    cache: false
+
+  datasource:
+    password: 1234
+    username: practicepj_user
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:43306/practicepj
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: yemdae@gmail.com
+    password: njmnacamywtyiyzw
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
