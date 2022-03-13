@@ -1,4 +1,4 @@
-package com.example.practicepj;
+package com.example.practicepj.main.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

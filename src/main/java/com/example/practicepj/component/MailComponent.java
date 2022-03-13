@@ -1,4 +1,4 @@
-package com.example.practicepj;
+package com.example.practicepj.component;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;

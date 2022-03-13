@@ -4,98 +4,38 @@
     <meta charset="UTF-8">
     <title>회원 가입</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <style>
-        #emailAuthDiv {
-            display: none;
-        }
-        #successAuth {
-            display: none;
-            color: green;
-        }
-    </style>
+    <script src="/js/register.js" defer></script>
+    <link rel="stylesheet" href="/css/register.css">
 
 </head>
 <body>
 
     <h1>회원 가입</h1>
-    <form method="post">
+    <form id="registerForm" method="post">
         <div>
-            <input name="userId" placeholder="아이디(이메일)" required/>
+            <input id="userIdInput" name="userId" placeholder="아이디(이메일)" required/>
             <button id="emailAuthBtn" type="button">인증 메일 발송</button>
+            <input id="confirmEmail" type="hidden"/>
         </div>
         <div id="emailAuthDiv">
             <input id="authKeyInput" name="emailAuthKey" placeholder="인증번호" maxlength="4" required/>
-            <button id="emailAuthCompleteBtn" type="button">인증</button>
             <p id="successAuth">인증 되었습니다.</p>
+            <p id="failureAuth">인증번호가 일치하지 않습니다.</p>
+            <p id="defaultAuth">인증번호를 입력하세요.</p><span id="loading"></span>
         </div>
         <div>
-            <input name="password" type="password" placeholder="비밀번호" required/>
+            <input id="passwordInput" name="password" type="password" placeholder="비밀번호" required/>
         </div>
         <div>
-            <input name="userName" placeholder="이름" required/>
+            <input id="nameInput" name="userName" placeholder="이름" required/>
         </div>
         <div>
-            <input name="phone" placeholder="전화번호" required/>
+            <input id="phoneInput" name="phone" placeholder="전화번호" required/>
         </div>
-        <button id="registerComplete" type="submit">회원 가입</button>
+        <button id="registerComplete" type="button">회원 가입</button>
 
     </form>
-    <script defer>
 
-        const successAuth = document.getElementById("successAuth")
-        const emailAuThDiv = document.getElementById("emailAuthDiv");
-        const emailAuthBtn = document.getElementById('emailAuthBtn');
-        const emailAuthCompleteBtn = document.getElementById("emailAuthCompleteBtn");
-        const authKeyInput = document.getElementById("authKeyInput");
-        const registerComplete = document.getElementById("registerComplete");
-        emailAuthCompleteBtn.disabled = true;
-        registerComplete.disabled = true;
 
-        authKeyInput.addEventListener("keyup", e=> {
-            if(authKeyInput.value.length > 3) {
-                emailAuthCompleteBtn.disabled = false;
-            }else {
-                emailAuthCompleteBtn.disabled = true;
-            }
-        })
-
-        emailAuthCompleteBtn.addEventListener("click", e =>{
-            const authKey = authKeyInput.value;
-            fetch('/member/email-auth-complete?authKey=' + authKey + "&userId=" + document.getElementsByName("userId")[0].value, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.text())
-            .then(data => {
-                if(data === 'true') {
-                    emailAuthCompleteBtn.style.display = 'none';
-                    registerComplete.disabled = false;
-                    successAuth.style.display = 'inline';
-                }else{
-
-                }
-            })
-
-        })
-
-        emailAuthBtn.addEventListener("click", e => {
-            emailAuThDiv.style.display = "block";
-            const userId = document.getElementsByName("userId")[0].value;
-            const data = {"userId" : userId};
-            fetch('/member/email-auth?userId=' + userId, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then(response => {
-                    if(response.status === 200) {
-                    }else {
-                        console.log("실패")
-                    }
-                }).catch(e => console.log(e));
-        });
-
-    </script>
 </body>
 </html>

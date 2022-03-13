@@ -1,6 +1,6 @@
 package com.example.practicepj.member.service;
 
-import com.example.practicepj.MailComponent;
+import com.example.practicepj.component.MailComponent;
 import com.example.practicepj.member.model.EmailAuth;
 import com.example.practicepj.member.repository.EmailAuthRepository;
 import com.example.practicepj.member.repository.MemberRepository;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
