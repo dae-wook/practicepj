@@ -37,11 +37,12 @@ disableBtn(emailInput,emailAuthBtn,4);
                         failureAuth.style.display = 'none';
                         defaultAuth.style.display = 'none';
                         loading.style.display = 'none';
-
+                        let test = /*[[${test}]]*/ 'asdasda';
                         authKeyInput.setAttribute("readonly", true);
                         userIdInput.setAttribute("readonly", true);
                         document.getElementById('passwordInput').focus();
                         document.getElementById("confirmEmail").value = userIdInput.value;
+                        console.log(test);
                     } else {
                         successAuth.style.display = 'none';
                         defaultAuth.style.display = 'none';
@@ -100,6 +101,8 @@ registerComplete.addEventListener("click", ()=>{
             isEmpty = false;
         }
         if(!isEmpty){
+            registerForm.action = '/member/register';
+            registerForm.method = 'POST';
             registerForm.submit();
         }else {
             alert("빈 칸이 있습니다.")

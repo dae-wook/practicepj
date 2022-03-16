@@ -7,9 +7,17 @@ import com.example.practicepj.member.repository.MemberRepository;
 import com.example.practicepj.member.model.Member;
 import com.example.practicepj.member.model.MemberInput;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -29,9 +37,11 @@ public class MemberServiceImpl implements MemberService{
             return false;
         }
 
+        String encPassword = BCrypt.hashpw(param.getPassword(), BCrypt.gensalt());
+
         Member member = Member.builder()
                 .userId(param.getUserId())
-                .password((param.getPassword()))
+                .password((encPassword))
                 .phone(param.getPhone())
                 .userName(param.getUserName())
                 .regDt(LocalDateTime.now())
@@ -80,5 +90,23 @@ public class MemberServiceImpl implements MemberService{
         }
 
         return result;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Optional<Member> optionalMember = memberRepository.findById(username);
+
+        if(!optionalMember.isPresent()) {
+            throw new UsernameNotFoundException(".회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        List<GrantedAuthority> grantedAuthorityList = new ArrayList();
+        grantedAuthorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+
+        return new User(member.getUserId(), member.getPassword(), grantedAuthorityList);
     }
 }

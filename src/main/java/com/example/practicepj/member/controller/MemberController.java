@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
@@ -16,6 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 public class MemberController {
 
     private final MemberService memberService;
+
+    @RequestMapping("/member/login")
+    public String login() {
+
+        return "member/login";
+    }
+
+
 
     @GetMapping("/member/register")
     public String register() {
@@ -25,7 +35,6 @@ public class MemberController {
 
     @PostMapping("/member/register")
     public String register(Model m, MemberInput param) {
-
         boolean result = memberService.register(param);
         m.addAttribute("result", result);
 
@@ -42,7 +51,7 @@ public class MemberController {
     }
 
     @GetMapping("/member/email-auth-complete")
-    public String emailAuthComplete(String userId, String authKey) {
+    public String emailAuthComplete(String userId, String authKey, HttpServletRequest req) {
 
         String res = "false";
         boolean result = memberService.emailAuthComplete(userId, authKey);
@@ -60,5 +69,8 @@ public class MemberController {
 
         return "member/info";
     }
+
+
+
 
 }
