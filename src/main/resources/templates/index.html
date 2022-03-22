@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>메인 화면</title>
@@ -10,7 +10,9 @@
     <a sec:authorize="!isAuthenticated()" href="/member/register">회원 가입 |</a>
     <a sec:authorize="!isAuthenticated()" href="/member/login">로그인</a>
     <a sec:authorize="isAuthenticated()" href="/member/info">회원 정보 |</a>
-    <a sec:authorize="isAuthenticated()" href="/member/logout">로그아웃</a>
+    <a sec:authorize="isAuthenticated()" href="/member/logout">로그아웃 |</a>
+    <a sec:authorize="isAuthenticated()" href="/board/main">게시판 <span sec:authorize="hasRole('ROLE_ADMIN')">|</span></a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/main">어드민페이지</a>
     <p sec:authorize="isAuthenticated()"><span>아이디 : </span><span sec:authentication="principal.username"></span></p>
     <hr/>
 

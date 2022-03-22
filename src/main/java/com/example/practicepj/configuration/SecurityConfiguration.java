@@ -43,7 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         , "/member/email-auth"
                         ,"/member/email-auth-complete"
                         ,"/js/**"
-                        ,"/css/**")
+                        ,"/css/**"
+                        ,"/images/**")
                 .permitAll();
 
 

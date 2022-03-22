@@ -23,6 +23,7 @@ public class Member {
     private String password;
     private String userName;
     private String phone;
+    private boolean adminYn;
     private LocalDateTime regDt;
 
 }
