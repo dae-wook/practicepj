@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:fragment="fragment-body-menu">
+        <div>
+            <a sec:authorize="!isAuthenticated()" href="/member/register">회원 가입 |</a>
+            <a sec:authorize="!isAuthenticated()" href="/member/login">로그인</a>
+            <a sec:authorize="isAuthenticated()" href="/member/info">회원 정보 |</a>
+            <a sec:authorize="isAuthenticated()" href="/member/logout">로그아웃 |</a>
+            <a sec:authorize="isAuthenticated()" href="/article/main">게시판 <span sec:authorize="hasRole('ROLE_ADMIN')">|</span></a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/main">관리자페이지</a>
+        </div>
+        <hr/>
+    </div>
+
+</body>
+</html>

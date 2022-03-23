@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>글쓰기</title>
@@ -18,7 +18,7 @@
 </head>
 <body>
     <h1>글쓰기</h1>
-
+    <div th:replace="/fragment/layout.html :: fragment-body-menu"></div>
     <form id="article-write-form" method="post">
         <div>
             <input id="title" name = 'title' placeholder="제목 입력"/>
