@@ -10,6 +10,7 @@ public interface ArticleService {
     boolean write(String title, String content, String writer);
     List list();
     Article selectArticle(Long articleId);
+    Long currentArticle(String title,String content);
 
 
 }

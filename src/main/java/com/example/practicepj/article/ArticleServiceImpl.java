@@ -49,4 +49,12 @@ public class ArticleServiceImpl implements ArticleService{
 
         return article;
     }
+
+    @Override
+    public Long currentArticle(String title, String content) {
+
+        Optional<Article> optionalArticle = articleRepository.findByTitleAndContent(title, content);
+        Long currentArticle = optionalArticle.get().getId();
+        return currentArticle;
+    }
 }

@@ -12,10 +12,23 @@
     <p th:text="'작성자 : ' + ${article.writer}"></p>
     <p th:text="${article.regDt}"></p>
     <hr>
-    <p>댓글</p>
+    <p th:text="'댓글(' + ${commentList.size()} + ')'"></p>
+    <form method="post" action="/article/writeComment.do">
+        <input type="text" name="comment" placeholder="댓글을 입력하세요"/>
+        <input type="hidden" name="articleId" th:value="${article.id}"/>
+        <button type="submit">작성</button>
+    </form>
+    <div th:each="comment : ${commentList}">
+    <tr>
+        <td th:text="${comment.content}">gg</td>
+        <td th:text="${comment.writer}">wkdrn8860@naver.com</td>
+        <td th:text="${comment.regDt}">2022.03.17</td>
+    </tr>
+    </div>
 
 
-
-<a href="/article/main">목록으로</a>
+<div>
+    <a href="/article/main">목록으로</a>
+</div>
 </body>
 </html>
