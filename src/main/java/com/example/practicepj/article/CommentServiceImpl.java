@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class CommentServiceImpl implements CommentService{
                 .article(getArticle(articleId))
                 .content(comment)
                 .writer(writer)
-                .regDt(LocalDateTime.now())
+                .regDt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy년 MM월 dd일 HH시 mm분")))
                 .build();
 
         commentRepository.save(com);
@@ -36,22 +37,36 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public boolean delete(Long commentId) {
+
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        if(optionalComment.isPresent()) {
+            Comment comment = optionalComment.get();
+            comment.setDeleteYn(true);
+            commentRepository.save(comment);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public List<Comment> list(Long articleId) {
 
-        Article article = articleRepository.findById(articleId).get();
+//        Article article = articleRepository.findById(articleId).get();
+        List<Comment> list = null;
+        Article article;
+        Optional<Article> optionalArticle = articleRepository.findById(articleId);
+        if(optionalArticle.isPresent()) {
+            article = optionalArticle.get();
+            list = commentRepository.findAllByArticle(article);
+            for(int i = 0; i < list.size(); i++) {
+                if(list.get(i).isDeleteYn() == true) {
+                    list.remove(i);
+                }
+            }
+        }
 
-        List<Comment> list = commentRepository.findAllByArticle(article);
-
-//        if(list != null) {
-//            for(int i = 0 ; i < list.size() ; i++) {
-//                if(list.get(i).getArticle().getId() != articleId) {
-//                    list.remove(i);
-//                }
-//            }
-//            return list;
-//        }else {
-//            return null;
-//        }
         return list;
     }
 

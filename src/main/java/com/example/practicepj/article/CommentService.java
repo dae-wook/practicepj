@@ -8,6 +8,7 @@ public interface CommentService {
 
 
     boolean write(Long articleId, String comment, String writer);
+    boolean delete(Long commentId);
     List<Comment> list(Long articleId);
 
 

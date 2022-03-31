@@ -20,9 +20,9 @@ public class ArticleDto {
     private String title;
     private String content;
     private String writer;
-
+    private boolean deleteYn;
     private int commentCount;
-    private LocalDateTime regDt;
+    private String regDt;
 
 
     public static ArticleDto of(Article article) {
@@ -33,6 +33,7 @@ public class ArticleDto {
                 .content(article.getContent())
                 .writer(article.getWriter())
                 .regDt(article.getRegDt())
+                .deleteYn(article.isDeleteYn())
                 .build();
     }
 }

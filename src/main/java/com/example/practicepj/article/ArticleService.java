@@ -11,6 +11,6 @@ public interface ArticleService {
     List list();
     Article selectArticle(Long articleId);
     Long currentArticle(String title,String content);
-
+    boolean delete(Long id);
 
 }

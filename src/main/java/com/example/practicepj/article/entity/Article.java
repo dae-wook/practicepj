@@ -22,7 +22,8 @@ public class Article {
     private String title;
     private String content;
     private String writer;
+    private boolean deleteYn;
 
-    private LocalDateTime regDt;
+    private String regDt;
 
 }

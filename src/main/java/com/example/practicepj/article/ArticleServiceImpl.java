@@ -5,8 +5,9 @@ import com.example.practicepj.article.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,7 +23,8 @@ public class ArticleServiceImpl implements ArticleService{
                 .title(title)
                 .content(content)
                 .writer(writer)
-                .regDt(LocalDateTime.now())
+                .regDt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy년 MM월 dd일 HH시 mm분")))
+                .deleteYn(false)
                 .build();
 
         articleRepository.save(article);
@@ -34,7 +36,11 @@ public class ArticleServiceImpl implements ArticleService{
     public List list() {
 
         List<Article> list = articleRepository.findAll();
-
+        for(int i = 0; i < list.size(); i++) {
+            if(list.get(i).isDeleteYn() == true) {
+                list.remove(i);
+            }
+        }
         return list;
     }
 
@@ -56,5 +62,19 @@ public class ArticleServiceImpl implements ArticleService{
         Optional<Article> optionalArticle = articleRepository.findByTitleAndContent(title, content);
         Long currentArticle = optionalArticle.get().getId();
         return currentArticle;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+
+        Optional<Article> optionalArticle = articleRepository.findById(id);
+        if(optionalArticle.isPresent()) {
+            Article article = optionalArticle.get();
+            article.setDeleteYn(true);
+            articleRepository.save(article);
+            return true;
+        }
+
+        return false;
     }
 }

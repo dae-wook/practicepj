@@ -43,8 +43,18 @@ public class ArticleController {
     @GetMapping("/article/write.do")
     public String write() {
 
+
         return "article/write";
     }
+
+    @PostMapping("article/delete.do")
+    public String delete(Long id) {
+
+        articleService.delete(id);
+
+        return "redirect:/article/main";
+    }
+
     @PostMapping("/article/write.do")
     public String write(String title, String content, Principal principal) {
 
@@ -58,8 +68,12 @@ public class ArticleController {
     public String detail(Model m, Long articleId) {
 
         List<Comment> commentList = commentService.list(articleId);
-        m.addAttribute("article", articleService.selectArticle(articleId));
-        m.addAttribute("commentList", commentList);
+        Article article = articleService.selectArticle(articleId);
+
+        if(article != null && commentList != null) {
+            m.addAttribute("article", article);
+            m.addAttribute("commentList", commentList);
+        }
         //댓글도 추가해야함
         return "article/detail";
 
@@ -71,6 +85,14 @@ public class ArticleController {
         String writer = principal.getName();
         boolean result = commentService.write(articleId, comment, writer);
         m.addAttribute("result", result);
+
+        return "redirect:/article/detail.do?articleId=" + articleId;
+    }
+
+    @PostMapping("/article/deleteComment.do")
+    public String deleteComment(Long articleId, Long commentId) {
+
+        boolean result = commentService.delete(commentId);
 
         return "redirect:/article/detail.do?articleId=" + articleId;
     }

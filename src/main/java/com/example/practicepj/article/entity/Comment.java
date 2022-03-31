@@ -21,11 +21,12 @@ public class Comment {
 
     private String content;
     private String writer;
+    private boolean deleteYn;
 
     @ManyToOne // 댓글 여러개가 게시글 하나에 종속됨.
     @JoinColumn(name = "article_id")
     private Article article;
 
-    private LocalDateTime regDt;
+    private String regDt;
 
 }

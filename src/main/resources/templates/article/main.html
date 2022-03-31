@@ -16,13 +16,15 @@
             <th>작성자</th>
             <th>날짜</th>
         </tr>
-        <tr th:each="x : ${list}">
-            <td>
-                <a th:href="'detail.do?articleId='+${x.id}" th:text="${x.title} + ' [' + ${x.commentCount} + '] '"></a>
-            </td>
-            <td th:text="${x.writer}">wkdrn8860@naver.com</td>
-            <td th:text="${x.regDt}">2022.03.17</td>
-        </tr>
+        <div th:each="x : ${list}">
+            <tr th:if="${!x.deleteYn}">
+                <td>
+                    <a th:href="'detail.do?articleId='+${x.id}" th:text="${x.title} + ' [' + ${x.commentCount} + '] '"></a>
+                </td>
+                <td th:text="${x.writer}">wkdrn8860@naver.com</td>
+                <td th:text="${x.regDt}">2022.03.17</td>
+            </tr>
+        </div>
     </table>
     <a href="/article/write.do">글쓰기</a>
 <!--    <img src="http://1.227.192.121:8000/images/sa.png" alt="dd"/>-->
